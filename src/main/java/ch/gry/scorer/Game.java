@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import static ch.gry.scorer.Player.*;
 
-public class Scorer {
+public class Game {
 	
 	private static final String CANNOT_SCORE_TO_A_TERMINATED_GAME = "Cannot score for a terminated game!";
 
-	private Scorer() {}
+	private Game() {}
 	
 	private String serverName;
 	private String returnerName;
 	private List<Player> rallyHistory;
 	
 	
-	public static Scorer create(String serverName, String returnerName) {
-		Scorer scorer = new Scorer();
+	public static Game create(String serverName, String returnerName) {
+		Game scorer = new Game();
 		scorer.serverName = serverName;
 		scorer.returnerName = returnerName;
 		scorer.rallyHistory = new ArrayList<>();
