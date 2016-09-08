@@ -124,30 +124,30 @@ public class ScorerTest {
 	@Test
 	public void test_game_server_after_deuce() throws Exception {
 		Scorer scorer = Scorer.create("A", "B");
-		System.out.println(scorer);
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		scorer.scoreFor(RETURNER);
-		System.out.println(scorer);
 		scorer.scoreFor(RETURNER);
-		System.out.println(scorer);
 		scorer.scoreFor(RETURNER);
-		System.out.println(scorer);
 		// deuce
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		scorer.scoreFor(RETURNER);
-		System.out.println(scorer);
 		// deuce
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		scorer.scoreFor(SERVER);
-		System.out.println(scorer);
 		assertThat(scorer.getScore(), is(equalTo("Game A")));		
+	}
+	
+	@Test (expected = GameOverException.class)
+	public void exc_when_score_to_terminated_game() throws Exception {
+		Scorer scorer = Scorer.create("A", "B");
+		scorer.scoreFor(SERVER);
+		scorer.scoreFor(SERVER);
+		scorer.scoreFor(SERVER);
+		scorer.scoreFor(SERVER);
+		// game server
+		scorer.scoreFor(SERVER);
 	}
 
 }
