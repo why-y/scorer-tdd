@@ -1,10 +1,28 @@
 package ch.gry.scorer;
+import static ch.gry.scorer.Player.*;
 
 public class App {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		// play a long tight game
+		Scorer game = Scorer.create("Harry", "Eric");
+		try {
+			game.scoreFor(SERVER); System.out.println(game);
+			game.scoreFor(SERVER); System.out.println(game);
+			game.scoreFor(SERVER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(SERVER); System.out.println(game);
+			game.scoreFor(SERVER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(RETURNER); System.out.println(game);
+		}
+		catch(GameOverException e) {
+			System.err.println(e);
+		}
 	}
 
 }
