@@ -155,6 +155,12 @@ public class GameTest {
 	}
 	
 	@Test
+	public void withdraw_with_no_rallies() throws Exception {
+		testGame.withdrawLastRally();
+		assertThat(testGame.getScore(), is(equalTo("0:0")));		
+	}
+	
+	@Test
 	public void reset_game() throws Exception {
 		testGame.scoreFor(SERVER);
 		testGame.scoreFor(RETURNER);

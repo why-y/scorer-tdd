@@ -2,6 +2,7 @@ package ch.gry.scorer;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static ch.gry.scorer.Player.*;
 
 public class Game {
@@ -24,24 +25,14 @@ public class Game {
 	}
 	
 	public String getScore() {
-		if(isDeuce()) {
-			return "Deuce";
+		if(isDeuce()) return "Deuce";
+		for (Player player : Player.values()) {
+			if(isAdvantageFor(player)) 
+				return String.format("Advantage %s", player.getName());
+			if(isWonBy(player)) 
+				return String.format("Game %s", player.getName());			
 		}
-		else if(isAdvantageFor(SERVER)) {
-			return String.format("Advantage %s", server.getName());
-		}
-		else if(isAdvantageFor(RETURNER)) {
-			return String.format("Advantage %s", returner.getName());
-		}
-		else if(isGameWonBy(SERVER)) {
-			return String.format("Game %s", server.getName());
-		}
-		else if(isGameWonBy(RETURNER)) {
-			return String.format("Game %s", returner.getName());
-		}
-		else {
-			return String.format("%d:%d", getPointsOf(SERVER), getPointsOf(RETURNER));
-		}
+		return String.format("%d:%d", getPointsOf(SERVER), getPointsOf(RETURNER));
 	}
 	
 	public void reset() {
@@ -49,10 +40,7 @@ public class Game {
 	}
 	
 	public void withdrawLastRally() {
-		if(rallySequence.isEmpty()) {
-			System.err.println("No rally played so far. Cannot be whithdrawn!");
-		}
-		rallySequence.remove(rallySequence.size()-1);
+		rallySequence.removeIf(p -> rallySequence.indexOf(p)==rallySequence.size()-1);
 	}
 	
 	private long getPointsOf(Player player) {
@@ -70,7 +58,7 @@ public class Game {
 		return playerRallies>=4 && isOneRallyAhead(player);
 	}
 	
-	private boolean isGameWonBy(Player player) {
+	private boolean isWonBy(Player player) {
 		return getRalliesCount(player)>3 && isAtLeastTwoRalliesAhead(player);
 	}
 
@@ -97,7 +85,7 @@ public class Game {
 	}
 	
 	private boolean gameOver() {
-		return isGameWonBy(SERVER) || isGameWonBy(RETURNER);
+		return isWonBy(SERVER) || isWonBy(RETURNER);
 	}
 
 	@Override
