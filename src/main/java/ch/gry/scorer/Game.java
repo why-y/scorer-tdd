@@ -10,17 +10,17 @@ public class Game {
 
 	private Game() {}
 	
-	private String serverName;
-	private String returnerName;
+	private Player server = SERVER;
+	private Player returner = RETURNER;
 	private List<Player> rallyHistory;
 	
 	
 	public static Game create(String serverName, String returnerName) {
-		Game scorer = new Game();
-		scorer.serverName = serverName;
-		scorer.returnerName = returnerName;
-		scorer.rallyHistory = new ArrayList<>();
-		return scorer;
+		Game game = new Game();
+		game.server.setName(serverName);
+		game.returner.setName(returnerName);
+		game.rallyHistory = new ArrayList<>();
+		return game;
 	}
 	
 	public String getScore() {
@@ -28,16 +28,16 @@ public class Game {
 			return "Deuce";
 		}
 		else if(isAdvantageFor(SERVER)) {
-			return String.format("Advantage %s", serverName);
+			return String.format("Advantage %s", server.getName());
 		}
 		else if(isAdvantageFor(RETURNER)) {
-			return String.format("Advantage %s", returnerName);
+			return String.format("Advantage %s", returner.getName());
 		}
 		else if(isGameWonBy(SERVER)) {
-			return String.format("Game %s", serverName);
+			return String.format("Game %s", server.getName());
 		}
 		else if(isGameWonBy(RETURNER)) {
-			return String.format("Game %s", returnerName);
+			return String.format("Game %s", returner.getName());
 		}
 		else {
 			return String.format("%d:%d", getPointsOf(SERVER), getPointsOf(RETURNER));
@@ -103,9 +103,9 @@ public class Game {
 	@Override
 	public String toString() {
 		return String.format("%s(%d):%s(%d) score: %s -> RallyHistory: %s", 
-				serverName, 
+				server.getName(), 
 				getRalliesCount(SERVER),
-				returnerName, 
+				returner.getName(), 
 				getRalliesCount(RETURNER),
 				getScore(),
 				rallyHistory);
