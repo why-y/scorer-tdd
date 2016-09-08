@@ -1,24 +1,25 @@
 package ch.gry.scorer;
-import static ch.gry.scorer.Player.*;
 
 public class App {
 
 	public static void main(String[] args) {
 		// play a long tight game
-		Game game = Game.create("Harry", "Eric");
+		Player server = Player.create("Harry");
+		Player returner = Player.create("Eric");		
+		Game game = Game.create(server, returner);
 		try {
-			game.scoreFor(SERVER); System.out.println(game);
-			game.scoreFor(SERVER); System.out.println(game);
-			game.scoreFor(SERVER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(SERVER); System.out.println(game);
-			game.scoreFor(SERVER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
-			game.scoreFor(RETURNER); System.out.println(game);
+			game.scoreFor(server); System.out.println(game);
+			game.scoreFor(server); System.out.println(game);
+			game.scoreFor(server); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(server); System.out.println(game);
+			game.scoreFor(server); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
+			game.scoreFor(returner); System.out.println(game);
 		}
 		catch(GameOverException e) {
 			System.err.println(e);

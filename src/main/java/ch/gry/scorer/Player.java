@@ -1,13 +1,16 @@
 package ch.gry.scorer;
 
-public enum Player {
+public class Player {
 
-	SERVER("the server"), RETURNER("the returner");
-	
 	private String name;
 	
-	private Player(String name) {
-		setName(name);
+	private Player() {
+	}
+
+	public static Player create(String name) {
+		Player player = new Player();
+		player.setName(name);
+		return player;
 	}
 	
 	public void setName(String name) {

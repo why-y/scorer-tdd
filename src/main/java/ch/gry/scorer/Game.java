@@ -3,36 +3,49 @@ package ch.gry.scorer;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ch.gry.scorer.Player.*;
-
 public class Game {
-	
+
 	private static final String CANNOT_SCORE_TO_A_TERMINATED_GAME = "Cannot score for a terminated game!";
 
 	private Game() {}
 	
-	private Player server = SERVER;
-	private Player returner = RETURNER;
+	private Player [] players = new Player[2];
 	private List<Player> rallySequence;
 	
 	
-	public static Game create(String serverName, String returnerName) {
+	public static Game create(final Player server, final Player returner) {
 		Game game = new Game();
-		game.server.setName(serverName);
-		game.returner.setName(returnerName);
+		game.setServer(server);
+		game.setReturner(returner);
 		game.rallySequence = new ArrayList<>();
 		return game;
 	}
 	
+	private void setServer(Player player) { 
+		players[0] = player; 
+	}
+	
+	private Player getServer() { 
+		return players[0]; 
+	}
+	
+	private void setReturner(Player player) { 
+		players[1] = player; 
+	}
+	
+	private Player getReturner() { 
+		return players[1]; 
+	}
+	
 	public String getScore() {
 		if(isDeuce()) return "Deuce";
-		for (Player player : Player.values()) {
+		for (Player player : players) {
 			if(isAdvantageFor(player)) 
 				return String.format("Advantage %s", player.getName());
 			if(isWonBy(player)) 
 				return String.format("Game %s", player.getName());			
 		}
-		return String.format("%d:%d", getPointsOf(SERVER), getPointsOf(RETURNER));
+		return String.format("%d:%d", getPointsOf(getServer()), getPointsOf(getReturner()));
 	}
 	
 	public void reset() {
@@ -49,8 +62,8 @@ public class Game {
 	}
 
 	private boolean isDeuce() {
-		long serverRallies = getRalliesCount(SERVER);
-		return serverRallies>=3 && serverRallies==getRalliesCount(RETURNER);
+		long serverRallies = getRalliesCount(getServer());
+		return serverRallies>=3 && serverRallies==getRalliesCount(getReturner());
 	}
 	
 	private boolean isAdvantageFor(Player player) {
@@ -67,7 +80,7 @@ public class Game {
 	}
 
 	private Player oponentOf(Player player) {
-		return player==SERVER ? RETURNER : SERVER;
+		return player==getServer() ? getReturner() : getServer();
 	}
 
 	private boolean isAtLeastTwoRalliesAhead(Player player) {
@@ -85,16 +98,16 @@ public class Game {
 	}
 	
 	private boolean gameOver() {
-		return isWonBy(SERVER) || isWonBy(RETURNER);
+		return isWonBy(getServer()) || isWonBy(getReturner());
 	}
 
 	@Override
 	public String toString() {
 		return String.format("%s(%d):%s(%d) score: %s -> RallyHistory: %s", 
-				server.getName(), 
-				getRalliesCount(SERVER),
-				returner.getName(), 
-				getRalliesCount(RETURNER),
+				getServer().getName(), 
+				getRalliesCount(getServer()),
+				getReturner().getName(), 
+				getRalliesCount(getReturner()),
 				getScore(),
 				rallySequence);
 	}
