@@ -8,7 +8,7 @@ import org.junit.Before;
 import static org.hamcrest.CoreMatchers.*;
 import static ch.gry.scorer.Player.*;
 
-public class ScorerTest {
+public class GameTest {
 	
 	private Game scorer;
 	
