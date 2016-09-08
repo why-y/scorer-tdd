@@ -12,14 +12,14 @@ public class Game {
 	
 	private Player server = SERVER;
 	private Player returner = RETURNER;
-	private List<Player> rallyHistory;
+	private List<Player> rallySequence;
 	
 	
 	public static Game create(String serverName, String returnerName) {
 		Game game = new Game();
 		game.server.setName(serverName);
 		game.returner.setName(returnerName);
-		game.rallyHistory = new ArrayList<>();
+		game.rallySequence = new ArrayList<>();
 		return game;
 	}
 	
@@ -45,14 +45,14 @@ public class Game {
 	}
 	
 	public void reset() {
-		rallyHistory.clear();
+		rallySequence.clear();
 	}
 	
 	public void withdrawLastRally() {
-		if(rallyHistory.isEmpty()) {
+		if(rallySequence.isEmpty()) {
 			System.err.println("No rally played so far. Cannot be whithdrawn!");
 		}
-		rallyHistory.remove(rallyHistory.size()-1);
+		rallySequence.remove(rallySequence.size()-1);
 	}
 	
 	private long getPointsOf(Player player) {
@@ -87,13 +87,13 @@ public class Game {
 	}
 
 	private long getRalliesCount(Player player) {
-		return rallyHistory.stream().filter(p -> p==player).count();
+		return rallySequence.stream().filter(p -> p==player).count();
 	}
 
 	public void scoreFor(Player scorer) throws GameOverException {
 		if(gameOver()) 
 			throw new GameOverException(CANNOT_SCORE_TO_A_TERMINATED_GAME);
-		rallyHistory.add(scorer);
+		rallySequence.add(scorer);
 	}
 	
 	private boolean gameOver() {
@@ -108,7 +108,7 @@ public class Game {
 				returner.getName(), 
 				getRalliesCount(RETURNER),
 				getScore(),
-				rallyHistory);
+				rallySequence);
 	}
 
 }
