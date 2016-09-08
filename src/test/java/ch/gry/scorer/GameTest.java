@@ -10,141 +10,156 @@ import static ch.gry.scorer.Player.*;
 
 public class GameTest {
 	
-	private Game scorer;
+	private Game testGame;
 	
 	@Before
 	public void createScorer() {
-		scorer = Game.create("A", "B");
+		testGame = Game.create("A", "B");
 	}
 	
 
 	@Test
 	public void createInstance() {
-		assertThat(scorer, not(nullValue()));
+		assertThat(testGame, not(nullValue()));
 	}
 	
 	@Test
 	public void initial_score_is_0_0() {
-		assertThat(scorer.getScore(), is(equalTo("0:0")));		
+		assertThat(testGame.getScore(), is(equalTo("0:0")));		
 	}
 	
 	@Test
 	public void test_15_0() throws Exception {
-		scorer.scoreFor(SERVER);
-		assertThat(scorer.getScore(), is(equalTo("15:0")));		
+		testGame.scoreFor(SERVER);
+		assertThat(testGame.getScore(), is(equalTo("15:0")));		
 	}
 	
 	@Test
 	public void test_15_15() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("15:15")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("15:15")));		
 	}
 
 	@Test
 	public void test_30_15() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(SERVER);
-		assertThat(scorer.getScore(), is(equalTo("30:15")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		assertThat(testGame.getScore(), is(equalTo("30:15")));		
 	}
 
 	@Test
 	public void test_30_30() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(SERVER);
-		assertThat(scorer.getScore(), is(equalTo("30:30")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		assertThat(testGame.getScore(), is(equalTo("30:30")));		
 	}
 
 	@Test
 	public void test_30_40() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("30:40")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("30:40")));		
 	}
 
 	@Test
 	public void test_0_40() throws Exception {
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("0:40")));		
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("0:40")));		
 	}
 	
 	@Test
 	public void test_deuce() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("Deuce")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("Deuce")));		
 	}
 
 	@Test
 	public void test_advantage_server() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(SERVER);
-		assertThat(scorer.getScore(), is(equalTo("Advantage A")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		assertThat(testGame.getScore(), is(equalTo("Advantage A")));		
 	}
 
 	@Test
 	public void test_advantage_returner() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("Advantage B")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("Advantage B")));		
 	}
 
 	@Test
 	public void test_game_returner() throws Exception {
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		assertThat(scorer.getScore(), is(equalTo("Game B")));		
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		assertThat(testGame.getScore(), is(equalTo("Game B")));		
 	}
 
 	@Test
 	public void test_game_server_after_deuce() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
-		scorer.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
+		testGame.scoreFor(RETURNER);
 		// deuce
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(RETURNER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
 		// deuce
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		assertThat(scorer.getScore(), is(equalTo("Game A")));		
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		assertThat(testGame.getScore(), is(equalTo("Game A")));		
 	}
 	
 	@Test (expected = GameOverException.class)
 	public void exc_when_score_to_terminated_game() throws Exception {
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
-		scorer.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
 		// game server
-		scorer.scoreFor(SERVER);
+		testGame.scoreFor(SERVER);
+	}
+	
+	@Test
+	public void withdraw_last_rally() throws Exception {
+		testGame.scoreFor(SERVER);
+		testGame.withdrawLastRally();
+		assertThat(testGame.getScore(), is(equalTo("0:0")));		
+	}
+	
+	@Test
+	public void reset_game() throws Exception {
+		testGame.scoreFor(SERVER);
+		testGame.scoreFor(RETURNER);
+		testGame.reset();		
+		assertThat(testGame.getScore(), is(equalTo("0:0")));		
 	}
 
 }

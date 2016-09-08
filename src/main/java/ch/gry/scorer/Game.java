@@ -44,6 +44,17 @@ public class Game {
 		}
 	}
 	
+	public void reset() {
+		rallyHistory.clear();
+	}
+	
+	public void withdrawLastRally() {
+		if(rallyHistory.isEmpty()) {
+			System.err.println("No rally played so far. Cannot be whithdrawn!");
+		}
+		rallyHistory.remove(rallyHistory.size()-1);
+	}
+	
 	private long getPointsOf(Player player) {
 		long playerRallies = getRalliesCount(player);
 		return playerRallies<3 ? playerRallies*15 : 10 + playerRallies*10;
