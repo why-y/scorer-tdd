@@ -2,6 +2,7 @@ package ch.gry.scorer;
 import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Set {
@@ -43,10 +44,36 @@ public class Set {
 	}
 
 	public String getScore() {
-		return String.format("%d:%d", gamesOf(getServer()), gamesOf(getReturner())); 
+		for (Player player: players) {
+			if(isWonBy(player))
+				return String.format("Set %s", player.getName());
+		}
+		return String.format("%d:%d", gamesOf(getServer()), gamesOf(getReturner()));
+	}
+
+	private boolean isWonBy(final Player player) {
+		return gamesOf(player)>=6 && isTwoGamesAhead(player);
+	}
+
+	private boolean isTwoGamesAhead(final Player player) {
+		return gamesOf(player) - gamesOf(other(player)) >= 2;
+	}
+
+	private Player other(final Player player) {
+		return player==players[0] ? players[1] : players[0];
 	}
 
 	public void gameFor(Player player) {
+		if (isSetOver())
+			throw new SetOverException("Cannot score a game on a terminated Set!");
 		gameSequence.add(player);
+	}
+
+	private boolean isSetOver(){
+		return Arrays.stream(players).anyMatch(player -> isWonBy(player));
+	}
+
+	private boolean isLongSet() {
+		return gamesOf(getServer())>=5 && gamesOf(getReturner())>5 ;
 	}
 }

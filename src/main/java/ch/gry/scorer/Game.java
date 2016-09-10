@@ -92,12 +92,12 @@ public class Game {
 	}
 
 	public void scoreFor(Player scorer) throws GameOverException {
-		if(gameOver()) 
+		if(isGameOver())
 			throw new GameOverException(CANNOT_SCORE_TO_A_TERMINATED_GAME);
 		rallySequence.add(scorer);
 	}
 	
-	private boolean gameOver() {
+	private boolean isGameOver() {
 		return isWonBy(getServer()) || isWonBy(getReturner());
 	}
 
