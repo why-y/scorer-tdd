@@ -1,6 +1,7 @@
 package ch.gry.scorer;
 
 import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
+import static ch.gry.scorer.Set.Mode.WITH_TIEBREAK;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -72,6 +73,26 @@ public class SetTest {
 	@Test(expected = SetOverException.class)
 	public void disallow_score_on_terminated_set() throws Exception {
 		scoreXTimesFor(firstServer, 7);
+	}
+
+	@Test
+	public void pat_won_7_9() throws Exception {
+		scoreXTimesFor(firstServer, 5);
+		scoreXTimesFor(firstReturner, 6);
+		scoreXTimesFor(firstServer, 2);
+		scoreXTimesFor(firstReturner, 3);
+		assertThat(testSet.getScore(), is(equalTo("Set Pat")));
+	}
+
+	@Test
+	public void won_in_tiebreak() throws Exception {
+		Player mark = Player.create("Mark");
+		Player paul = Player.create("Paul");
+		testSet = Set.create(mark, paul, WITH_TIEBREAK);
+		scoreXTimesFor(mark, 5);
+		scoreXTimesFor(paul, 6);
+		scoreXTimesFor(mark, 2);
+		assertThat(testSet.getScore(), is(equalTo("Set Mark")));
 	}
 
 

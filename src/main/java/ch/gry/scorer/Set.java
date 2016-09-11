@@ -1,5 +1,6 @@
 package ch.gry.scorer;
 import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
+import static ch.gry.scorer.Set.Mode.WITH_TIEBREAK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,10 +53,15 @@ public class Set {
 	}
 
 	private boolean isWonBy(final Player player) {
-		return gamesOf(player)>=6 && isTwoGamesAhead(player);
+		return gamesOf(player)==6 && isAtLeastTwoGamesAhead(player) ||
+				gamesOf(player)>6 && (mode==WITHOUT_TIEBREAK ? isAtLeastTwoGamesAhead(player) : isAtLeastOneGameAhead(player));
 	}
 
-	private boolean isTwoGamesAhead(final Player player) {
+	private boolean isAtLeastOneGameAhead(final Player player) {
+		return gamesOf(player) - gamesOf(other(player)) >= 1;
+	}
+
+	private boolean isAtLeastTwoGamesAhead(final Player player) {
 		return gamesOf(player) - gamesOf(other(player)) >= 2;
 	}
 
@@ -73,7 +79,4 @@ public class Set {
 		return Arrays.stream(players).anyMatch(player -> isWonBy(player));
 	}
 
-	private boolean isLongSet() {
-		return gamesOf(getServer())>=5 && gamesOf(getReturner())>5 ;
-	}
 }
