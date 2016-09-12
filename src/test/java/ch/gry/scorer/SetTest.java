@@ -95,7 +95,24 @@ public class SetTest {
 		assertThat(testSet.getScore(), is(equalTo("Set Mark")));
 	}
 
+	@Test(expected = SetOverException.class)
+	public void disallow_score_on_terminated_tiebreaker() throws Exception {
+		Player mark = Player.create("Mark");
+		Player paul = Player.create("Paul");
+		testSet = Set.create(mark, paul, WITH_TIEBREAK);
+		scoreXTimesFor(mark, 5);
+		scoreXTimesFor(paul, 6);
+		scoreXTimesFor(mark, 2);
+		testSet.gameFor(paul);
+	}
 
+	@Test
+	public void test_0_0_after_reset() {
+		scoreXTimesFor(firstServer, 5);
+		scoreXTimesFor(firstReturner, 2);
+		testSet.reset();
+		assertThat(testSet.getScore(), is(equalTo("0:0")));
+	}
 
 
 	private void scoreXTimesFor(Player player, int times) throws  SetOverException {

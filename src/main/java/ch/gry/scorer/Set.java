@@ -1,6 +1,5 @@
 package ch.gry.scorer;
-import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
-import static ch.gry.scorer.Set.Mode.WITH_TIEBREAK;
+import static ch.gry.scorer.Set.Mode.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,26 +17,10 @@ public class Set {
 	
 	public static Set create(Player firstServer, Player firstReturner, Mode setMode) {
 		Set set = new Set();
-		set.setServer(firstServer);
-		set.setReturner(firstReturner);
+		set.players[0] = firstServer;
+		set.players[1] = firstReturner;
 		set.mode = setMode;
 		return set;
-	}
-
-	private void setServer(Player player) { 
-		players[0] = player; 
-	}
-	
-	private Player getServer() { 
-		return players[0]; 
-	}
-	
-	private void setReturner(Player player) { 
-		players[1] = player; 
-	}
-	
-	private Player getReturner() {
-		return players[1];
 	}
 
 	private long gamesOf(Player player) {
@@ -49,7 +32,7 @@ public class Set {
 			if(isWonBy(player))
 				return String.format("Set %s", player.getName());
 		}
-		return String.format("%d:%d", gamesOf(getServer()), gamesOf(getReturner()));
+		return String.format("%d:%d", gamesOf(players[0]), gamesOf(players[1]));
 	}
 
 	private boolean isWonBy(final Player player) {
@@ -78,5 +61,13 @@ public class Set {
 	private boolean isSetOver(){
 		return Arrays.stream(players).anyMatch(player -> isWonBy(player));
 	}
+	
+	public void reset() {
+		gameSequence.clear();
+	}
 
+	@Override
+	public String toString() {
+		return String.format("%s vs. %s: %s", players[0].getName(), players[1].getName(), getScore());
+	}
 }
