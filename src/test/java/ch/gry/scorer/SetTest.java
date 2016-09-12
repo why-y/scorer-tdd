@@ -30,8 +30,6 @@ public class SetTest {
 
 	@Test
 	public void createSet() throws Exception {
-		assertThat(firstServer, is(not(nullValue())));
-		assertThat(firstReturner, is(not(nullValue())));
 		assertThat(testSet, is(not(nullValue())));
 	}
 	

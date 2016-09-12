@@ -11,10 +11,6 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
-def javaVersion = JavaVersion.VERSION_1_8
-sourceCompatibility = javaVersion
-targetCompatibility = javaVersion
-
 compileJava.options.encoding = 'UTF-8'
 
 // In this section you declare where to find the dependencies of your project
