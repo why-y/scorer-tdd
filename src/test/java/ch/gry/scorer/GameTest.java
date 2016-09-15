@@ -142,7 +142,7 @@ public class GameTest {
 		assertThat(testGame.getScore(), is(equalTo("Game A")));		
 	}
 	
-	@Test (expected = GameOverException.class)
+	@Test (expected = AlreadyTerminatedException.class)
 	public void exc_when_score_to_terminated_game() throws Exception {
 		testGame.scoreFor(server);
 		testGame.scoreFor(server);
@@ -155,13 +155,13 @@ public class GameTest {
 	@Test
 	public void withdraw_last_rally() throws Exception {
 		testGame.scoreFor(server);
-		testGame.withdrawLastRally();
+		testGame.undoLastScore();
 		assertThat(testGame.getScore(), is(equalTo("0:0")));		
 	}
 	
 	@Test
 	public void withdraw_with_no_rallies() throws Exception {
-		testGame.withdrawLastRally();
+		testGame.undoLastScore();
 		assertThat(testGame.getScore(), is(equalTo("0:0")));		
 	}
 	

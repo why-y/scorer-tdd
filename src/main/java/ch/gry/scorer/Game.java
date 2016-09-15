@@ -1,59 +1,26 @@
 package ch.gry.scorer;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Game extends ScoreUnit {
 
-public class Game {
-
-	private static final String CANNOT_SCORE_TO_A_TERMINATED_GAME = "Cannot score for a terminated game!";
-
-	private Game() {}
-	
-	private Player [] players = new Player[2];
-	private List<Player> rallySequence;
-	
+	private Game(final Player server, final Player returner) {
+		super(server, returner);
+	}
 	
 	public static Game create(final Player server, final Player returner) {
-		Game game = new Game();
-		game.setServer(server);
-		game.setReturner(returner);
-		game.rallySequence = new ArrayList<>();
+		Game game = new Game(server, returner);
 		return game;
 	}
 	
-	private void setServer(Player player) { 
-		players[0] = player; 
-	}
-	
-	private Player getServer() { 
-		return players[0]; 
-	}
-	
-	private void setReturner(Player player) { 
-		players[1] = player; 
-	}
-	
-	private Player getReturner() { 
-		return players[1]; 
-	}
 	
 	public String getScore() {
 		if(isDeuce()) return "Deuce";
-		for (Player player : players) {
+		for (Player player : players.values()) {
 			if(isAdvantageFor(player)) 
 				return String.format("Advantage %s", player.getName());
 			if(isWonBy(player)) 
 				return String.format("Game %s", player.getName());			
 		}
 		return String.format("%d:%d", getPointsOf(getServer()), getPointsOf(getReturner()));
-	}
-	
-	public void reset() {
-		rallySequence.clear();
-	}
-	
-	public void withdrawLastRally() {
-		rallySequence.removeIf(p -> rallySequence.indexOf(p)==rallySequence.size()-1);
 	}
 	
 	private long getPointsOf(Player player) {
@@ -71,7 +38,8 @@ public class Game {
 		return playerRallies>=4 && isOneRallyAhead(player);
 	}
 	
-	private boolean isWonBy(Player player) {
+	@Override
+	public boolean isWonBy(Player player) {
 		return getRalliesCount(player)>3 && isAtLeastTwoRalliesAhead(player);
 	}
 
@@ -88,17 +56,7 @@ public class Game {
 	}
 
 	private long getRalliesCount(Player player) {
-		return rallySequence.stream().filter(p -> p==player).count();
-	}
-
-	public void scoreFor(Player scorer) throws GameOverException {
-		if(isGameOver())
-			throw new GameOverException(CANNOT_SCORE_TO_A_TERMINATED_GAME);
-		rallySequence.add(scorer);
-	}
-	
-	private boolean isGameOver() {
-		return isWonBy(getServer()) || isWonBy(getReturner());
+		return scoreSequence.stream().filter(p -> p==player).count();
 	}
 
 	@Override
@@ -109,7 +67,7 @@ public class Game {
 				getReturner().getName(), 
 				getRalliesCount(getReturner()),
 				getScore(),
-				rallySequence);
+				scoreSequence);
 	}
 
 }

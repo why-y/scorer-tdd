@@ -40,7 +40,7 @@ public class SetTest {
 
 	@Test
 	public void test_score_1_0() throws Exception {
-		testSet.gameFor(firstServer);
+		testSet.scoreFor(firstServer);
 		assertThat(testSet.getScore(), is(equalTo("1:0")));
 	}
 
@@ -48,8 +48,8 @@ public class SetTest {
 	public void test_score_6_6() throws Exception {
 		scoreXTimesFor(firstServer, 5);
 		scoreXTimesFor(firstReturner, 5);
-		testSet.gameFor(firstServer);
-		testSet.gameFor(firstReturner);
+		testSet.scoreFor(firstServer);
+		testSet.scoreFor(firstReturner);
 		assertThat(testSet.getScore(), is(equalTo("6:6")));
 	}
 
@@ -68,7 +68,7 @@ public class SetTest {
 		assertThat(testSet.getScore(), is(equalTo("Set Tom")));
 	}
 
-	@Test(expected = SetOverException.class)
+	@Test(expected = AlreadyTerminatedException.class)
 	public void disallow_score_on_terminated_set() throws Exception {
 		scoreXTimesFor(firstServer, 7);
 	}
@@ -93,7 +93,7 @@ public class SetTest {
 		assertThat(testSet.getScore(), is(equalTo("Set Mark")));
 	}
 
-	@Test(expected = SetOverException.class)
+	@Test(expected = AlreadyTerminatedException.class)
 	public void disallow_score_on_terminated_tiebreaker() throws Exception {
 		Player mark = Player.create("Mark");
 		Player paul = Player.create("Paul");
@@ -101,7 +101,7 @@ public class SetTest {
 		scoreXTimesFor(mark, 5);
 		scoreXTimesFor(paul, 6);
 		scoreXTimesFor(mark, 2);
-		testSet.gameFor(paul);
+		testSet.scoreFor(paul);
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class SetTest {
 	}
 
 
-	private void scoreXTimesFor(Player player, int times) throws  SetOverException {
-		IntStream.range(0,times).forEach(i -> testSet.gameFor(player));
+	private void scoreXTimesFor(Player player, int times) throws AlreadyTerminatedException {
+		IntStream.range(0,times).forEach(i -> testSet.scoreFor(player));
 	}
 }

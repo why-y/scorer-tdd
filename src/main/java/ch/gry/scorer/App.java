@@ -21,7 +21,7 @@ public class App {
 			game.scoreFor(returner); System.out.println(game);
 			game.scoreFor(returner); System.out.println(game);
 		}
-		catch(GameOverException e) {
+		catch(AlreadyTerminatedException e) {
 			System.err.println(e);
 		}
 	}

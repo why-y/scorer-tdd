@@ -36,7 +36,7 @@ public class MatchTest {
 	
 	@Test
 	public void tom_leads_1_0() throws Exception {
-		testMatch.scoreSetFor(firstServer);
+		testMatch.scoreFor(firstServer);
 		assertThat(testMatch.getScore(), is(equalTo("1:0")));
 	}
 }
