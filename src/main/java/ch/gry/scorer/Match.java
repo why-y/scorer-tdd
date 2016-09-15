@@ -12,6 +12,10 @@ public class Match extends ScoreUnit {
 	}
 	
 	public String getScore() {
+		for (Player player : getPlayers()) {
+			if(isWonBy(player))
+				return String.format("Match %s", player.getName());
+		}
 		return String.format("%d:%d", noOfWonSetsOf(getServer()), noOfWonSetsOf(getReturner()));
 	}
 
@@ -21,6 +25,6 @@ public class Match extends ScoreUnit {
 	
 	@Override
 	public boolean isWonBy(Player player) {
-		return false;
+		return getScoreCount(player)==2;
 	}
 }

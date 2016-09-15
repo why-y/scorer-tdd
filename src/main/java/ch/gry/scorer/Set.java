@@ -20,7 +20,7 @@ public class Set extends ScoreUnit{
 	}
 
 	public String getScore() {
-		for (Player player: players.values()) {
+		for (Player player: getPlayers()) {
 			if(isWonBy(player))
 				return String.format("Set %s", player.getName());
 		}

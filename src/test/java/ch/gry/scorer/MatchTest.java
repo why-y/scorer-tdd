@@ -13,30 +13,48 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 public class MatchTest {
 	
-	private Match testMatch;
-	private Player firstServer;
-	private Player firstReturner;
+	private Player tom;
+	private Player pat;
 
 	@Before
 	public void setUp() {
-		firstServer =  Player.create("Tom");
-		firstReturner = Player.create("Pat");
-		testMatch = Match.create(firstServer, firstReturner);
+		tom =  Player.create("Tom");
+		pat = Player.create("Pat");
 	}
 
 	@Test
 	public void createMatch() throws Exception {
+		Match testMatch = Match.create(tom, pat);
 		assertThat(testMatch, is(not(nullValue())));
 	}
 	
 	@Test
 	public void initial_score_is_0_0() throws Exception {
+		Match testMatch = Match.create(tom, pat);
 		assertThat(testMatch.getScore(), is(equalTo("0:0")));
 	}
 	
 	@Test
 	public void tom_leads_1_0() throws Exception {
-		testMatch.scoreFor(firstServer);
+		Match testMatch = Match.create(tom, pat);
+		testMatch.scoreFor(tom);
 		assertThat(testMatch.getScore(), is(equalTo("1:0")));
+	}
+	
+	@Test
+	public void tom_wins_a_best_of_3_with_2_1() throws Exception {
+		Match testMatch = Match.create(tom, pat);
+		testMatch.scoreFor(pat);
+		testMatch.scoreFor(tom);
+		testMatch.scoreFor(tom);
+		assertThat(testMatch.getScore(), is(equalTo("Match Tom")));
+	}
+	
+	@Test(expected = AlreadyTerminatedException.class)
+	public void dont_let_score_on_terminated_match() throws Exception {
+		Match testMatch = Match.create(tom, pat);
+		testMatch.scoreFor(tom);
+		testMatch.scoreFor(tom);
+		testMatch.scoreFor(tom);	
 	}
 }

@@ -4,6 +4,7 @@ import static ch.gry.scorer.ScoreUnit.ServerOrReturner.RETURNER;
 import static ch.gry.scorer.ScoreUnit.ServerOrReturner.SERVER;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public abstract class ScoreUnit {
 	enum ServerOrReturner {SERVER, RETURNER};
 	
 	protected List<Player> scoreSequence;
-	protected Map<ServerOrReturner, Player> players;
+	private Map<ServerOrReturner, Player> players;
 	
 	protected ScoreUnit(final Player server, final Player returner) {
 		scoreSequence = new ArrayList<>();
@@ -29,22 +30,46 @@ public abstract class ScoreUnit {
 		players.put(RETURNER, returner);
 	}
 
-	final public boolean isTerminated() {
+	final protected boolean isTerminated() {
 		return players.values().stream().anyMatch(player -> isWonBy(player));
 	};
 	
 	abstract public boolean isWonBy(final Player player);
 	
-	final public Player getServer() {
+	final protected Collection<Player> getPlayers() {
+		return players.values();
+	}
+	
+	final protected Player getServer() {
 		return players.get(SERVER);
 	}
 
-	final public Player getReturner() {
+	final protected Player getReturner() {
 		return players.get(RETURNER);
 	}
 	
-	final public Player opponentOf(final Player player) {
+	final protected Player opponentOf(final Player player) {
 		return player==getServer() ? getReturner() : getServer();
+	}
+
+	final protected boolean isEvenScore() {
+		return getScoreCount(getServer()) == getScoreCount(getReturner());
+	}
+	
+	final protected boolean isOneScorePointAhead(final Player player) {
+		return getScoreCount(player)-getScoreCount(opponentOf(player)) == 1;
+	}
+	
+	final protected boolean isAtLeastOneScorePointsAhead(final Player player) {
+		return getScoreCount(player)-getScoreCount(opponentOf(player)) >= 1;
+	}
+	
+	final protected boolean isAtLeastTwoScorePointsAhead(final Player player) {
+		return getScoreCount(player)-getScoreCount(opponentOf(player)) >= 2;
+	}
+	
+	final protected long getScoreCount(Player player) {
+		return scoreSequence.stream().filter(p -> p==player).count();
 	}
 
 	public void scoreFor(final Player player) {
