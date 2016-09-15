@@ -1,7 +1,9 @@
-package ch.gry.scorer;
+package ch.gry.scorer.match;
 
 import static org.junit.Assert.*;
 
+import ch.gry.scorer.AlreadyTerminatedException;
+import ch.gry.scorer.Player;
 import ch.gry.scorer.match.Match;
 import ch.gry.scorer.match.MatchBuilder;
 import org.junit.Before;
@@ -53,7 +55,7 @@ public class MatchTest {
 	}
 	
 	@Test(expected = AlreadyTerminatedException.class)
-	public void dont_let_score_on_terminated_match() throws Exception {
+	public void disallow_score_on_a_terminated_match() throws Exception {
 		Match testMatch = new Match(tom, pat);
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(tom);
@@ -61,7 +63,7 @@ public class MatchTest {
 	}
 	
 	@Test
-	public void allow_2_2_for_best_of_five_matches() throws Exception {
+	public void score_is_2_2_for_best_of_five_match() throws Exception {
 		Match testMatch = new MatchBuilder(tom, pat).length(BEST_OF_FIVE).build();
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(tom);
@@ -71,7 +73,7 @@ public class MatchTest {
 	}
 
 	@Test
-	public void pat_wins_3_2_in_a_best_of_5() throws Exception {
+	public void pat_wins_a_best_of_5_match_with_2_3() throws Exception {
 		Match testMatch = new MatchBuilder(tom, pat).length(BEST_OF_FIVE).build();
 		testMatch.scoreFor(pat);
 		testMatch.scoreFor(tom);
