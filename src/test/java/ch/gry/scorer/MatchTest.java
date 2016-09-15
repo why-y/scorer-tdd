@@ -3,6 +3,7 @@ package ch.gry.scorer;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -56,5 +57,16 @@ public class MatchTest {
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(tom);	
+	}
+	
+	@Test
+	@Ignore
+	public void allow_2_2_for_best_of_five_matches() throws Exception {
+		Match testMatch = Match.create(tom, pat);
+		testMatch.scoreFor(tom);
+		testMatch.scoreFor(tom);
+		testMatch.scoreFor(pat);
+		testMatch.scoreFor(pat);
+		assertThat(testMatch.getScore(), is(equalTo("2:2")));		
 	}
 }
