@@ -13,6 +13,10 @@ public class Tiebreak extends ScoreUnit{
         return new Tiebreak(firstServer, firstReturner);
     }
 
+    public String getScore() {
+        return String.format("%d:%d", getScoreCount(getServer()), getScoreCount(getReturner()));
+    }
+
     @Override
     public boolean isWonBy(Player player) {
         return false;
