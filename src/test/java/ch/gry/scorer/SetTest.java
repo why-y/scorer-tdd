@@ -53,7 +53,8 @@ public class SetTest {
 	public void pat_won_3_6() throws Exception {
 		scoreXTimesFor(firstServer, 3);
 		scoreXTimesFor(firstReturner, 6);
-		assertThat(testSet.getScore(), is(equalTo("Set Pat")));
+		assertThat(testSet.getScore(), is(equalTo("3:6")));
+		assertThat(testSet.isWonBy(firstReturner), is(true));
 	}
 
 	@Test
@@ -61,7 +62,8 @@ public class SetTest {
 		scoreXTimesFor(firstServer, 5);
 		scoreXTimesFor(firstReturner, 5);
 		scoreXTimesFor(firstServer, 2);
-		assertThat(testSet.getScore(), is(equalTo("Set Tom")));
+		assertThat(testSet.getScore(), is(equalTo("7:5")));
+		assertThat(testSet.isWonBy(firstServer), is(true));
 	}
 
 	@Test(expected = AlreadyTerminatedException.class)
@@ -75,7 +77,8 @@ public class SetTest {
 		scoreXTimesFor(firstReturner, 6);
 		scoreXTimesFor(firstServer, 2);
 		scoreXTimesFor(firstReturner, 3);
-		assertThat(testSet.getScore(), is(equalTo("Set Pat")));
+		assertThat(testSet.getScore(), is(equalTo("7:9")));
+		assertThat(testSet.isWonBy(firstReturner), is(true));
 	}
 
 	@Test
@@ -86,7 +89,8 @@ public class SetTest {
 		scoreXTimesFor(mark, 5);
 		scoreXTimesFor(paul, 6);
 		scoreXTimesFor(mark, 2);
-		assertThat(testSet.getScore(), is(equalTo("Set Mark")));
+		assertThat(testSet.getScore(), is(equalTo("7:6")));
+		assertThat(testSet.isWonBy(mark), is(true));
 	}
 
 	@Test(expected = AlreadyTerminatedException.class)

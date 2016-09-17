@@ -41,4 +41,8 @@ public class Match extends ScoreUnit {
 	public Game getCurrentGame() {
 		return getCurrentSet().getCurrentGame();
 	}
+
+	public String getFullScore() {
+		return String.format("%s; %s; %s", getScore(), getCurrentSet().getScore(), getCurrentGame().getScore());
+	}
 }

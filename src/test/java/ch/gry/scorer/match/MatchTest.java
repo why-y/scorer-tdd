@@ -101,5 +101,7 @@ public class MatchTest {
 	@Ignore
 	public void test_a_complete_match() throws Exception {
 		Match testMatch = new MatchBuilder(tom, pat).build();
+		testMatch.getCurrentGame().scoreFor(tom);
+		assertThat(testMatch.getFullScore(), is(equalTo("0:0; 0:0; 15:0")));
 	}
 }
