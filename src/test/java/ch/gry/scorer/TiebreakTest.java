@@ -41,6 +41,28 @@ public class TiebreakTest {
         assertThat(testTiebreak.getScore(), is(equalTo("4:2")));
     }
 
+    @Test
+    public void tom_wins_7_4() {
+        scoreXTimesFor(firstServer, 4);
+        scoreXTimesFor(firstReturner, 4);
+        scoreXTimesFor(firstServer, 3);
+        assertThat(testTiebreak.getScore(), is(equalTo("Tiebreak Tom")));
+    }
+
+    @Test
+    public void pat_wins_8_10() {
+        scoreXTimesFor(firstServer, 6);
+        scoreXTimesFor(firstReturner, 7);
+        scoreXTimesFor(firstServer, 2);
+        scoreXTimesFor(firstReturner, 3);
+        assertThat(testTiebreak.getScore(), is(equalTo("Tiebreak Pat")));
+    }
+
+    @Test(expected = AlreadyTerminatedException.class)
+    public void disallow_score_on_terminated_tiebreak() throws Exception {
+        scoreXTimesFor(firstServer, 8);
+    }
+
     private void scoreXTimesFor(Player player, int times) throws AlreadyTerminatedException {
         IntStream.range(0,times).forEach(i -> testTiebreak.scoreFor(player));
     }

@@ -14,11 +14,15 @@ public class Tiebreak extends ScoreUnit{
     }
 
     public String getScore() {
+        for (Player player: getPlayers()) {
+            if(isWonBy(player))
+                return String.format("Tiebreak %s", player.getName());
+        }
         return String.format("%d:%d", getScoreCount(getServer()), getScoreCount(getReturner()));
     }
 
     @Override
     public boolean isWonBy(Player player) {
-        return false;
+        return getScoreCount(player)>=7 && isAtLeastTwoScorePointsAhead(player);
     }
 }
