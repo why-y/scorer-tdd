@@ -1,18 +1,29 @@
 package ch.gry.scorer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
 
 public class Set extends ScoreUnit{
-	enum Mode{WITH_TIEBREAK, WITHOUT_TIEBREAK}
+	public enum Mode{WITH_TIEBREAK, WITHOUT_TIEBREAK}
 	private Mode mode =  WITHOUT_TIEBREAK;
-	
+
+	private List<Game> games;
+
 	private Set(final Player firstServer, final Player firstReturner) {
 		super(firstServer, firstReturner);
+		games = Arrays.asList(Game.create(firstServer, firstReturner));
 	}
-	
+
 	public static Set create(final Player firstServer, final Player firstReturner, Mode setMode) {
 		Set set = new Set(firstServer, firstReturner);
 		set.mode = setMode;
 		return set;
+	}
+
+	public Game getCurrentGame() {
+		return games.get(games.size()-1);
 	}
 
 	private long gamesOf(Player player) {

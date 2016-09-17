@@ -2,17 +2,13 @@ package ch.gry.scorer;
 
 import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
 import static ch.gry.scorer.Set.Mode.WITH_TIEBREAK;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.stream.IntStream;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 
 
 public class SetTest {
@@ -112,6 +108,11 @@ public class SetTest {
 		assertThat(testSet.getScore(), is(equalTo("0:0")));
 	}
 
+	@Test
+	public void test_get_current_game() throws Exception {
+		Game currentGame = testSet.getCurrentGame();
+		assertThat(currentGame, is(notNullValue()));
+	}
 
 	private void scoreXTimesFor(Player player, int times) throws AlreadyTerminatedException {
 		IntStream.range(0,times).forEach(i -> testSet.scoreFor(player));

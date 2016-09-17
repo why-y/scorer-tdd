@@ -1,6 +1,7 @@
 package ch.gry.scorer.match;
 
 import ch.gry.scorer.Player;
+import ch.gry.scorer.Set;
 
 import static ch.gry.scorer.match.Length.*;
 import static ch.gry.scorer.match.Mode.*;
@@ -33,6 +34,8 @@ public class MatchBuilder {
         Match match = new Match(firstServer, firstReturner);
         match.length = this.length;
         match.mode = this.mode;
+        match.sets.add(Set.create(firstServer, firstReturner,
+                match.mode==WITHOUT_TIEBREAK ? Set.Mode.WITHOUT_TIEBREAK : Set.Mode.WITH_TIEBREAK));
         return match;
     }
 }

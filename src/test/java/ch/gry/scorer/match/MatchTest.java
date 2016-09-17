@@ -1,18 +1,18 @@
 package ch.gry.scorer.match;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import ch.gry.scorer.AlreadyTerminatedException;
+import ch.gry.scorer.Game;
 import ch.gry.scorer.Player;
+import ch.gry.scorer.Set;
 import ch.gry.scorer.match.Match;
 import ch.gry.scorer.match.MatchBuilder;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static ch.gry.scorer.match.Length.*;
 
 public class MatchTest {
@@ -81,5 +81,25 @@ public class MatchTest {
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(pat);
 		assertThat(testMatch.getScore(), is(equalTo("Match Pat")));
+	}
+
+	@Test
+	public void test_get_current_set() throws Exception {
+		Match testMatch = new MatchBuilder(tom, pat).build();
+		Set	currentSet = testMatch.getCurrentSet();
+		assertThat(currentSet, is(notNullValue()));
+	}
+
+	@Test
+	public void test_get_current_game() throws Exception {
+		Match testMatch = new MatchBuilder(tom, pat).build();
+		Game currentGame = testMatch.getCurrentGame();
+		assertThat(currentGame, is(notNullValue()));
+	}
+
+	@Test
+	@Ignore
+	public void test_a_complete_match() throws Exception {
+		Match testMatch = new MatchBuilder(tom, pat).build();
 	}
 }
