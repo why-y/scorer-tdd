@@ -1,4 +1,5 @@
 package ch.gry.scorer.match;
+import ch.gry.scorer.AlreadyTerminatedException;
 import ch.gry.scorer.Game;
 import ch.gry.scorer.Player;
 import ch.gry.scorer.ScoreUnit;
@@ -22,10 +23,6 @@ public class Match extends ScoreUnit {
 	}
 
 	public String getScore() {
-		for (Player player : getPlayers()) {
-			if(isWonBy(player))
-				return String.format("Match %s", player.getName());
-		}
 		return String.format("%d:%d", getScoreCount(getServer()), getScoreCount(getReturner()));
 	}
 
@@ -44,5 +41,16 @@ public class Match extends ScoreUnit {
 
 	public String getFullScore() {
 		return String.format("%s; %s; %s", getScore(), getCurrentSet().getScore(), getCurrentGame().getScore());
+	}
+
+	public void rallyWonBy(final Player player) {
+		if(isTerminated())
+			throw new AlreadyTerminatedException("This match has already been terminated! No more rallies accepted.");
+		Set currentSet = getCurrentSet();
+		currentSet.rallyWonBy(player);
+		if(currentSet.isWonBy(player)) {
+			scoreFor(player);
+			currentSet.reset();
+		}
 	}
 }

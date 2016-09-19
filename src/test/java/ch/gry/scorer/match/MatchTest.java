@@ -1,19 +1,20 @@
 package ch.gry.scorer.match;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static ch.gry.scorer.match.Length.BEST_OF_FIVE;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import ch.gry.scorer.AlreadyTerminatedException;
 import ch.gry.scorer.Game;
 import ch.gry.scorer.Player;
 import ch.gry.scorer.Set;
-import ch.gry.scorer.match.Match;
-import ch.gry.scorer.match.MatchBuilder;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static ch.gry.scorer.match.Length.*;
 
 public class MatchTest {
 	
@@ -51,7 +52,7 @@ public class MatchTest {
 		testMatch.scoreFor(pat);
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(tom);
-		assertThat(testMatch.getScore(), is(equalTo("Match Tom")));
+		assertThat(testMatch.getScore(), is(equalTo("2:1")));
 	}
 	
 	@Test(expected = AlreadyTerminatedException.class)
@@ -80,7 +81,7 @@ public class MatchTest {
 		testMatch.scoreFor(pat);
 		testMatch.scoreFor(tom);
 		testMatch.scoreFor(pat);
-		assertThat(testMatch.getScore(), is(equalTo("Match Pat")));
+		assertThat(testMatch.getScore(), is(equalTo("2:3")));
 	}
 
 	@Test
@@ -98,10 +99,72 @@ public class MatchTest {
 	}
 
 	@Test
-	@Ignore
 	public void test_a_complete_match() throws Exception {
 		Match testMatch = new MatchBuilder(tom, pat).build();
-		testMatch.getCurrentGame().scoreFor(tom);
-		assertThat(testMatch.getFullScore(), is(equalTo("0:0; 0:0; 15:0")));
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		assertThat(testMatch.getFullScore(), is(equalTo("1:0; 2:0; 30:0")));
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		testMatch.rallyWonBy(tom);
+		
+		assertThat(testMatch.getFullScore(), is(equalTo("2:0; 0:0; 0:0")));
+		
 	}
 }

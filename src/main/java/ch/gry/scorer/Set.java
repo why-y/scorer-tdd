@@ -1,9 +1,8 @@
 package ch.gry.scorer;
-import java.util.ArrayList;
+import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
+
 import java.util.Arrays;
 import java.util.List;
-
-import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
 
 public class Set extends ScoreUnit{
 	public enum Mode{WITH_TIEBREAK, WITHOUT_TIEBREAK}
@@ -52,4 +51,14 @@ public class Set extends ScoreUnit{
 	public String toString() {
 		return String.format("%s vs. %s: %s", getServer().getName(), getReturner().getName(), getScore());
 	}
+
+	public void rallyWonBy(final Player player) {
+		Game currentGame = getCurrentGame();
+		currentGame.scoreFor(player);
+		if(currentGame.isWonBy(player)) {
+			scoreFor(player);
+			currentGame.reset();
+		}
+	}
+	
 }
