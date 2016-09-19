@@ -36,15 +36,17 @@ public abstract class ScoreUnit {
 	
 	abstract public boolean isWonBy(final Player player);
 	
+	abstract public String getScore();
+	
 	final protected Collection<Player> getPlayers() {
 		return players.values();
 	}
 	
-	final protected Player getServer() {
+	final public Player getServer() {
 		return players.get(SERVER);
 	}
 
-	final protected Player getReturner() {
+	final public Player getReturner() {
 		return players.get(RETURNER);
 	}
 	
@@ -72,6 +74,7 @@ public abstract class ScoreUnit {
 		return scoreSequence.stream().filter(p -> p==player).count();
 	}
 
+	
 	public void scoreFor(final Player player) {
 		if(isTerminated())
 			throw new AlreadyTerminatedException(String.format("This %s has already been terminated. Thus it's not allowed to be scored!", getClass().getSimpleName()));

@@ -12,9 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.gry.scorer.AlreadyTerminatedException;
-import ch.gry.scorer.Game;
 import ch.gry.scorer.Player;
-import ch.gry.scorer.Set;
+import ch.gry.scorer.ScoreUnit;
+import ch.gry.scorer.set.Set;
 
 public class MatchTest {
 	
@@ -94,7 +94,7 @@ public class MatchTest {
 	@Test
 	public void test_get_current_game() throws Exception {
 		Match testMatch = new MatchBuilder(tom, pat).build();
-		Game currentGame = testMatch.getCurrentGame();
+		ScoreUnit currentGame = testMatch.getCurrentGame();
 		assertThat(currentGame, is(notNullValue()));
 	}
 

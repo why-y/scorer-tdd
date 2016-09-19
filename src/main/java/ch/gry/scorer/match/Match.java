@@ -1,27 +1,30 @@
 package ch.gry.scorer.match;
 import ch.gry.scorer.AlreadyTerminatedException;
-import ch.gry.scorer.Game;
 import ch.gry.scorer.Player;
 import ch.gry.scorer.ScoreUnit;
-import ch.gry.scorer.Set;
-
-import java.util.ArrayList;
-import java.util.List;
+import ch.gry.scorer.set.Set;
+import ch.gry.scorer.set.SetBuilder;
 
 import static ch.gry.scorer.match.Length.*;
 import static ch.gry.scorer.match.Mode.*;
 
 public class Match extends ScoreUnit {
 
-	protected Length length = BEST_OF_THREE;
-	protected Mode mode = WITH_TIEBREAKS;
+	Length length = BEST_OF_THREE;
+	Mode mode = ALL_SETS_WITH_TIEBREAKS;
 
-	List<Set> sets = new ArrayList<>();
+	private Set currentSet;
 
 	protected Match(final Player firstServer, final Player firstReturner) {
 		super(firstServer, firstReturner);
+		currentSet = new SetBuilder(firstServer, firstReturner).build();
+	}
+	
+	public void setCurrentSet(final Set currentSet) {
+		this.currentSet = currentSet;
 	}
 
+	@Override
 	public String getScore() {
 		return String.format("%d:%d", getScoreCount(getServer()), getScoreCount(getReturner()));
 	}
@@ -32,10 +35,10 @@ public class Match extends ScoreUnit {
 	}
 
 	public Set getCurrentSet() {
-		return sets.get(sets.size()-1);
+		return currentSet;
 	}
 
-	public Game getCurrentGame() {
+	public ScoreUnit getCurrentGame() {
 		return getCurrentSet().getCurrentGame();
 	}
 

@@ -1,34 +1,31 @@
-package ch.gry.scorer;
-import static ch.gry.scorer.Set.Mode.WITHOUT_TIEBREAK;
+package ch.gry.scorer.set;
+import static ch.gry.scorer.set.Mode.WITHOUT_TIEBREAK;
 
-import java.util.Arrays;
-import java.util.List;
+import ch.gry.scorer.Game;
+import ch.gry.scorer.Player;
+import ch.gry.scorer.ScoreUnit;
+import ch.gry.scorer.Tiebreak;
 
 public class Set extends ScoreUnit{
-	public enum Mode{WITH_TIEBREAK, WITHOUT_TIEBREAK}
-	private Mode mode =  WITHOUT_TIEBREAK;
+	
+	protected Mode mode =  WITHOUT_TIEBREAK;
 
-	private List<Game> games;
+	private ScoreUnit currentGame;
 
-	private Set(final Player firstServer, final Player firstReturner) {
+	public Set(final Player firstServer, final Player firstReturner) {
 		super(firstServer, firstReturner);
-		games = Arrays.asList(Game.create(firstServer, firstReturner));
+		currentGame = Game.create(firstServer, firstReturner);
 	}
 
-	public static Set create(final Player firstServer, final Player firstReturner, Mode setMode) {
-		Set set = new Set(firstServer, firstReturner);
-		set.mode = setMode;
-		return set;
-	}
-
-	public Game getCurrentGame() {
-		return games.get(games.size()-1);
+	public ScoreUnit getCurrentGame() {
+		return currentGame;
 	}
 
 	private long gamesOf(Player player) {
 		return scoreSequence.stream().filter(p -> p==player).count();
 	}
 
+	@Override
 	public String getScore() {
 		return String.format("%d:%d", gamesOf(getServer()), gamesOf(getReturner()));
 	}
@@ -53,12 +50,18 @@ public class Set extends ScoreUnit{
 	}
 
 	public void rallyWonBy(final Player player) {
-		Game currentGame = getCurrentGame();
 		currentGame.scoreFor(player);
 		if(currentGame.isWonBy(player)) {
 			scoreFor(player);
-			currentGame.reset();
+			currentGame = setupNextGame();
 		}
 	}
 	
+	private ScoreUnit setupNextGame() {
+		Player newServer = currentGame.getReturner();
+		Player newReturner = currentGame.getServer();
+		return (this.mode==Mode.WITH_TIEBREAK && getScoreCount(getServer())==6 && isEvenScore())  ? 
+				Tiebreak.create(newServer, newReturner) :
+				Game.create(newServer, newReturner);
+	}
 }
