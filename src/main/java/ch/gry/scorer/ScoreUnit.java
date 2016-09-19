@@ -37,6 +37,8 @@ public abstract class ScoreUnit {
 	abstract public boolean isWonBy(final Player player);
 	
 	abstract public String getScore();
+
+	abstract public void rallyWonBy(final Player player);
 	
 	final protected Collection<Player> getPlayers() {
 		return players.values();
@@ -75,7 +77,7 @@ public abstract class ScoreUnit {
 	}
 
 	
-	public void scoreFor(final Player player) {
+	protected void scoreFor(final Player player) {
 		if(isTerminated())
 			throw new AlreadyTerminatedException(String.format("This %s has already been terminated. Thus it's not allowed to be scored!", getClass().getSimpleName()));
 		scoreSequence.add(player);

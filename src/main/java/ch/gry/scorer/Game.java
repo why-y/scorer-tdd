@@ -36,6 +36,11 @@ public class Game extends ScoreUnit {
 	}
 	
 	@Override
+	public void rallyWonBy(Player player) {
+		scoreFor(player);
+	}
+	
+	@Override
 	public boolean isWonBy(Player player) {
 		return getScoreCount(player)>3 && isAtLeastTwoScorePointsAhead(player);
 	}

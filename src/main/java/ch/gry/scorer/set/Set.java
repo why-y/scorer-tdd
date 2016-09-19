@@ -50,7 +50,7 @@ public class Set extends ScoreUnit{
 	}
 
 	public void rallyWonBy(final Player player) {
-		currentGame.scoreFor(player);
+		currentGame.rallyWonBy(player);
 		if(currentGame.isWonBy(player)) {
 			scoreFor(player);
 			currentGame = setupNextGame();

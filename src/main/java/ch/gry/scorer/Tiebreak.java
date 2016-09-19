@@ -14,6 +14,11 @@ public class Tiebreak extends ScoreUnit{
     }
 
     @Override
+    public void rallyWonBy(final Player player) {
+    	scoreFor(player);
+    }
+    
+    @Override
     public String getScore() {
         for (Player player: getPlayers()) {
             if(isWonBy(player))

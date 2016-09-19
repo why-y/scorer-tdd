@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static ch.gry.scorer.set.Mode.*;
+import static ch.gry.scorer.Constants.*;
+
 import ch.gry.scorer.set.Set;
 import ch.gry.scorer.set.SetBuilder;
 
@@ -15,8 +17,6 @@ import java.util.stream.IntStream;
 
 public class SetTest {
 	
-	private static final int NUM_OF_RALLIES_TO_WIN_A_GAME = 4;
-	private static final int NUM_OF_RALLIES_TO_WIN_A_TIEBREAK = 7;
 	private Set testSet;
 	private Player tom;
 	private Player pat;
