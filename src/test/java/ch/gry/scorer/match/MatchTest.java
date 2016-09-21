@@ -17,12 +17,22 @@ import org.junit.Test;
 import ch.gry.scorer.AlreadyTerminatedException;
 import ch.gry.scorer.Player;
 import ch.gry.scorer.ScoreUnit;
+import ch.gry.scorer.command.Command;
+import ch.gry.scorer.command.ScoreRally;
+import ch.gry.scorer.event.EventHandler;
+import ch.gry.scorer.processor.CommandProcessor;
+import ch.gry.scorer.processor.EventStore;
+import ch.gry.scorer.processor.ScoreRallyProcessor;
+import ch.gry.scorer.rally.Rally;
+import ch.gry.scorer.rally.RallyBuilder;
 import ch.gry.scorer.set.Set;
 
 public class MatchTest {
 	
 	private Player tom;
 	private Player pat;
+	private ScoreRallyProcessor commandProcessor;
+	private EventStore eventStore;
 	private Match testMatch;
 
 	@Before
@@ -30,6 +40,9 @@ public class MatchTest {
 		tom =  Player.create("Tom");
 		pat = Player.create("Pat");
 		testMatch = new MatchBuilder(tom, pat).build();
+		commandProcessor = new ScoreRallyProcessor();
+		eventStore = new EventStore();
+		commandProcessor.setEventStore(eventStore);
 	}
 
 	@Test
@@ -39,6 +52,7 @@ public class MatchTest {
 	
 	@Test
 	public void initial_score_is_0_0() throws Exception {
+		eventStore.replayEventsFor(testMatch);
 		assertThat(testMatch.getScore(), is(equalTo("0:0")));
 	}
 	
@@ -165,6 +179,9 @@ public class MatchTest {
 	private void scoreRalliesFor(final Player player, int numOfRallies) {
 		IntStream.range(0, numOfRallies).forEach(i -> testMatch.rallyWonBy(player));	
 	}
-	
 
+	private Rally rallyFor(final Player winner) {
+		return new RallyBuilder(winner).build();
+	}
+	
 }

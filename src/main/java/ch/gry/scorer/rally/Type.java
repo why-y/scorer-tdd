@@ -1,4 +1,4 @@
-package ch.gry.scorer.event;
+package ch.gry.scorer.rally;
 
 public enum Type {
 	ACE,

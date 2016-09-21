@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.gry.scorer.rally.Rally;
+
 public abstract class ScoreUnit {
 	
 	/**
@@ -76,7 +78,13 @@ public abstract class ScoreUnit {
 		return scoreSequence.stream().filter(p -> p==player).count();
 	}
 
+	public void score(final Rally rally) {
+		if(isTerminated())
+			throw new AlreadyTerminatedException(String.format("This %s has already been terminated. Thus it's not allowed to be scored!", getClass().getSimpleName()));
+		// TODO		
+	}
 	
+	@Deprecated
 	protected void scoreFor(final Player player) {
 		if(isTerminated())
 			throw new AlreadyTerminatedException(String.format("This %s has already been terminated. Thus it's not allowed to be scored!", getClass().getSimpleName()));
